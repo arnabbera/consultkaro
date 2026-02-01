@@ -111,7 +111,7 @@ nav a:hover{color:#38bdf8}
   border-radius:18px;
 }
 
-/* OFFICE IMAGES (LANDSCAPE) */
+/* OFFICE IMAGES */
 .office-img{
   width:100%;
   height:200px;
@@ -120,11 +120,11 @@ nav a:hover{color:#38bdf8}
   margin:15px 0;
 }
 
-/* CONSULTANT IMAGES (PORTRAIT - FIXED) */
+/* CONSULTANT IMAGES */
 .consultant-img{
   width:100%;
   height:220px;
-  object-fit:contain;   /* NO ZOOM */
+  object-fit:contain;
   background:#020617;
   padding:10px;
   border-radius:14px;
@@ -137,6 +137,57 @@ nav a:hover{color:#38bdf8}
   height:220px;
   object-fit:cover;
   border-radius:18px;
+}
+
+/* FREE CONSULTATION MODAL */
+.consult-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.75);
+  z-index:3000;
+  justify-content:center;
+  align-items:center;
+}
+
+.consult-box{
+  background:#020617;
+  padding:30px;
+  max-width:420px;
+  width:100%;
+  border-radius:18px;
+  position:relative;
+}
+
+.consult-box h2{
+  color:#38bdf8;
+  margin-bottom:20px;
+}
+
+.consult-box input{
+  width:100%;
+  padding:12px;
+  margin-bottom:15px;
+  border:none;
+  border-radius:10px;
+}
+
+.consult-submit{
+  width:100%;
+  padding:14px;
+  background:#38bdf8;
+  border:none;
+  border-radius:30px;
+  font-weight:600;
+  cursor:pointer;
+}
+
+.consult-close{
+  position:absolute;
+  top:12px;
+  right:18px;
+  font-size:26px;
+  cursor:pointer;
 }
 
 /* FOOTER */
@@ -165,10 +216,7 @@ footer{
   display:flex;
   align-items:center;
   justify-content:center;
-  transition:transform 0.3s ease;
 }
-
-.floating-social a:hover{transform:scale(1.1)}
 
 .whatsapp{background:#25d366}
 .facebook{background:#1877f2}
@@ -186,11 +234,11 @@ footer{
 <body>
 
 <header>
-  <div class="logo">
-    <img src="images/logo.png" alt="ConsultKaro">
+  <div class="nav-container">
+    <div class="logo">ConsultKaro</div>
   </div>
   <nav>
-	<a href="#home">Home</a>
+    <a href="#home">Home</a>
     <a href="#services">Services</a>
     <a href="#offices">Offices</a>
     <a href="#consultant">Consultant</a>
@@ -198,14 +246,13 @@ footer{
   </nav>
 </header>
 
-<!-- home -->
-
 <section id="home" class="home">
   <div class="home-text">
     <h1><span>ConsultKaro</span><br>Your Trusted Property & Financial Partner</h1>
     <p>Expert assistance in property and financial planning.</p>
-    <a href="#contact" class="btn">Free Consultation</a>
+
     <a href="#services" class="btn alt">Explore Services</a>
+    <a href="javascript:void(0)" class="btn" id="openConsult">Free Consultation</a>
   </div>
 
   <div class="home-slider slider">
@@ -215,7 +262,6 @@ footer{
   </div>
 </section>
 
-<!-- SERVICES -->
 <section id="services">
   <h2>Our Services</h2>
   <div class="grid">
@@ -232,7 +278,6 @@ footer{
   </div>
 </section>
 
-<!-- OFFICES -->
 <section id="offices">
   <h2>Our Offices – Kolkata</h2>
   <div class="grid">
@@ -254,37 +299,33 @@ footer{
   </div>
 </section>
 
-<!-- CONSULTANTS (FIXED IMAGES) -->
 <section id="consultant">
   <h2>Consultant in Kolkata</h2>
   <div class="grid">
     <div class="office-card">
       <h3>Metiabruz Office</h3>
-      <img src="images/aftab.jpg" class="consultant-img" alt="Aftab Alam">
+      <img src="images/aftab.jpg" class="consultant-img">
       <p>Aftab Alam</p>
-	  <p>[BA, LL.B pursuing]</p>
+      <p>[BA, LL.B pursuing]</p>
       <p>Mobile 7439297280</p>
     </div>
-
     <div class="office-card">
       <h3>Gariahat Office</h3>
-      <img src="images/arnab.jpg" class="consultant-img" alt="Arnab Bera">
+      <img src="images/arnab.jpg" class="consultant-img">
       <p>Arnab Bera</p>
-	  <p>[MTech, LL.B pursuing]</p>
+      <p>[MTech, LL.B pursuing]</p>
       <p>Mobile 9830015498</p>
     </div>
-
     <div class="office-card">
       <h3>NewTown Office</h3>
-      <img src="images/pratik.jpg" class="consultant-img" alt="Pratik Majumder">
+      <img src="images/pratik.jpg" class="consultant-img">
       <p>Pratik Majumder</p>
-	  <p>[MBA, LL.B pursuing]</p>
+      <p>[MBA, LL.B pursuing]</p>
       <p>Mobile 9830419552</p>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <h2>Contact Us</h2>
   <div class="grid">
@@ -301,12 +342,25 @@ footer{
   <p>© 2025 ConsultKaro. All Rights Reserved.</p>
 </footer>
 
-<!-- FLOATING SOCIAL + WHATSAPP -->
 <div class="floating-social">
   <a href="https://www.facebook.com/" class="facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
   <a href="https://www.instagram.com/" class="instagram" target="_blank"><i class="fab fa-instagram"></i></a>
   <a href="https://www.linkedin.com/" class="linkedin" target="_blank"><i class="fab fa-linkedin-in"></i></a>
   <a href="https://wa.me/919830015487" class="whatsapp" target="_blank"><i class="fab fa-whatsapp"></i></a>
+</div>
+
+<!-- FREE CONSULTATION MODAL -->
+<div class="consult-modal" id="consultModal">
+  <div class="consult-box">
+    <span class="consult-close" id="closeConsult">&times;</span>
+    <h2>Free Consultation</h2>
+    <form id="consultForm">
+      <input id="cName" placeholder="Full Name" required>
+      <input id="cPhone" placeholder="Mobile Number" required>
+      <input id="cQuery" placeholder="Your Requirement">
+      <button class="consult-submit">Submit</button>
+    </form>
+  </div>
 </div>
 
 <script>
@@ -317,6 +371,29 @@ setInterval(()=>{
   index=(index+1)%slides.length;
   slides[index].classList.add('active');
 },5000);
+
+const openConsult=document.getElementById("openConsult");
+const closeConsult=document.getElementById("closeConsult");
+const consultModal=document.getElementById("consultModal");
+
+openConsult.onclick=function(){
+  consultModal.style.display="flex";
+};
+
+closeConsult.onclick=function(){
+  consultModal.style.display="none";
+};
+
+document.getElementById("consultForm").onsubmit=function(e){
+  e.preventDefault();
+  const msg =
+    "Free Consultation Request%0A"+
+    "Name: "+cName.value+"%0A"+
+    "Phone: "+cPhone.value+"%0A"+
+    "Requirement: "+cQuery.value;
+  window.open("https://wa.me/919830068336?text="+msg,"_blank");
+  consultModal.style.display="none";
+};
 </script>
 
 </body>
