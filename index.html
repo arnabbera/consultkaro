@@ -327,17 +327,65 @@ footer{
 }
 
 
+/* HAMBURGER MENU */
+.menu-toggle{
+  display:none;
+  font-size:26px;
+  cursor:pointer;
+  color:#fff;
+}
+
+/* MOBILE MENU FIX */
+@media(max-width:768px){
+
+  header{
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+  }
+
+  .menu-toggle{
+    display:block;
+  }
+
+  nav{
+    position:absolute;
+    top:70px;
+    left:0;
+    width:100%;
+    background:#020617;
+    flex-direction:column;
+    display:none;
+    padding:20px 6%;
+  }
+
+  nav a{
+    margin:10px 0;
+    font-size:16px;
+  }
+
+  nav.active{
+    display:flex;
+  }
+}
+
 </style>
 </head>
 
 <body>
 
+
 <header>
   <div class="nav-container">
     <div class="logo">ConsultKaro</div>
-	
+
+    <!-- Hamburger Menu -->
+    <div class="menu-toggle" id="menuToggle">
+      <i class="fas fa-bars"></i>
+    </div>
   </div>
-  <nav>
+
+  <nav id="mobileMenu">
     <a href="#home">Home</a>
     <a href="#services">Services</a>
     <a href="#offices">Offices</a>
@@ -345,6 +393,8 @@ footer{
     <a href="#contact">Contact</a>
   </nav>
 </header>
+
+
 
 <section id="home" class="home">
   <div class="home-text">
@@ -361,6 +411,9 @@ footer{
     <div class="slide"><img src="images/hero3.jpg"></div>
   </div>
 </section>
+
+
+
 
 <section id="services">
   <h2>Our Services</h2>
@@ -492,6 +545,15 @@ document.getElementById("consultForm").onsubmit=function(e){
   window.open("https://wa.me/917439297280?text="+msg,"_blank");
   consultModal.style.display="none";
 };
+
+// Hamburger toggle
+const menuToggle = document.getElementById("menuToggle");
+const mobileMenu = document.getElementById("mobileMenu");
+
+menuToggle.onclick = function(){
+  mobileMenu.classList.toggle("active");
+};
+
 </script>
 
 </body>
