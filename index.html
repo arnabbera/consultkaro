@@ -369,6 +369,25 @@ footer{
   }
 }
 
+/* ===== HEADER MOBILE FIX ===== */
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+}
+
+.menu-toggle{
+  margin-left:auto;
+}
+
+@media(max-width:768px){
+  nav{
+    width:100%;
+  }
+}
+
+
 </style>
 </head>
 
@@ -376,13 +395,11 @@ footer{
 
 
 <header>
-  <div class="nav-container">
-    <div class="logo">ConsultKaro</div>
+  <div class="logo">ConsultKaro</div>
 
-    <!-- Hamburger Menu -->
-    <div class="menu-toggle" id="menuToggle">
-      <i class="fas fa-bars"></i>
-    </div>
+  <!-- Hamburger Menu -->
+  <div class="menu-toggle" id="menuToggle">
+    <i class="fas fa-bars"></i>
   </div>
 
   <nav id="mobileMenu">
