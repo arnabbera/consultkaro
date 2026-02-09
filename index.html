@@ -223,27 +223,111 @@ footer{
 .instagram{background:#e1306c}
 .linkedin{background:#0a66c2}
 
-
 /* MOBILE */
 @media(max-width:768px){
+  header{flex-direction:column}
+  .home{flex-direction:column;text-align:center}
+}
 
+
+
+
+/* =========================
+   MOBILE RESPONSIVE FIXES
+   (NO EXISTING CODE CHANGED)
+   ========================= */
+@media (max-width: 768px){
+
+  /* HEADER FIX */
   header{
+    padding:12px 6%;
     flex-direction:column;
-    text-align:center;
+    align-items:flex-start;
   }
 
   nav{
+    width:100%;
     margin-top:10px;
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
   }
 
+  nav a{
+    margin-left:0;
+    padding:8px 0;
+    font-size:14px;
+  }
+
+  /* SECTION PADDING */
+  section{
+    padding:80px 6%;
+  }
+
+  /* HOME SECTION */
   .home{
     flex-direction:column;
     text-align:center;
-    gap:25px;
   }
+
+  .home h1{
+    font-size:32px;
+  }
+
+  .home-slider{
+    width:100%;
+    margin-top:25px;
+  }
+
+  .slider{
+    height:220px;
+  }
+
+  /* BUTTONS */
+  .btn,
+  .btn.alt{
+    display:block;
+    width:100%;
+    margin:12px auto 0;
+  }
+
+  .btn.alt{
+    margin-left:0;
+  }
+
+  /* GRID STACK */
+  .grid{
+    grid-template-columns:1fr;
+  }
+
+  /* IMAGES SCALE */
+  .office-img,
+  .consultant-img,
+  .contact-img{
+    height:auto;
+  }
+
+  /* FOOTER */
+  footer{
+    padding:25px 6%;
+    font-size:14px;
+  }
+
+  /* FLOATING SOCIAL */
+  .floating-social{
+    right:12px;
+    bottom:12px;
+  }
+
+  .floating-social a{
+    width:48px;
+    height:48px;
+    font-size:20px;
+  }
+}
+
+
 </style>
-
-
 </head>
 
 <body>
@@ -251,6 +335,7 @@ footer{
 <header>
   <div class="nav-container">
     <div class="logo">ConsultKaro</div>
+	
   </div>
   <nav>
     <a href="#home">Home</a>
@@ -318,21 +403,21 @@ footer{
   <h2>Consultant in Kolkata</h2>
   <div class="grid">
     <div class="office-card">
-      <h3>Consultant in Metiabruz</h3>
+      <h3>Metiabruz Office</h3>
       <img src="images/aftab.jpg" class="consultant-img">
       <p>Aftab Alam</p>
       <p>[BA, LL.B pursuing]</p>
       <p>Mobile 7439297280</p>
     </div>
     <div class="office-card">
-      <h3>Consultant in Gariahat</h3>
+      <h3>Gariahat Office</h3>
       <img src="images/arnab.jpg" class="consultant-img">
       <p>Arnab Bera</p>
       <p>[MTech, LL.B pursuing]</p>
       <p>Mobile 9830015498</p>
     </div>
     <div class="office-card">
-      <h3>Consultant in NewTown</h3>
+      <h3>NewTown Office</h3>
       <img src="images/pratik.jpg" class="consultant-img">
       <p>Pratik Majumder</p>
       <p>[MBA, LL.B pursuing]</p>
@@ -356,7 +441,7 @@ footer{
 </footer>
 
 <div class="floating-social">
-  <a href="https://www.facebook.com/consultkaro2025" class="facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
+  <a href="https://www.facebook.com/consultkaro" class="facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
   <a href="https://www.instagram.com/consultkaro2025" class="instagram" target="_blank"><i class="fab fa-instagram"></i></a>
   <a href="https://www.youtube.com/@consultkaro" class="youtube" target="_blank"><i class="fab fa-youtube"></i></a>
   <a href="https://wa.me/918017061945" class="whatsapp" target="_blank"><i class="fab fa-whatsapp"></i></a>
@@ -404,7 +489,7 @@ document.getElementById("consultForm").onsubmit=function(e){
     "Name: "+cName.value+"%0A"+
     "Phone: "+cPhone.value+"%0A"+
     "Requirement: "+cQuery.value;
-  window.open("https://wa.me/918017061945?text="+msg,"_blank");
+  window.open("https://wa.me/917439297280?text="+msg,"_blank");
   consultModal.style.display="none";
 };
 </script>
