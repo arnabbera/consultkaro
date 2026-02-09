@@ -276,11 +276,15 @@ footer{
 
   .home-slider{
     width:100%;
-    margin-top:25px;
+
   }
 
   .slider{
-    height:220px;
+    height:60vh;      /* Bigger responsive height */
+    min-height:280px; /* Prevents tiny slider */
+  }
+.slide img{
+    object-fit:cover;
   }
 
   /* BUTTONS */
