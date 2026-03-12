@@ -1,581 +1,396 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ConsultKaro provides end-to-end property management, legal documentation, and investment advisory support across Kolkata.">
+  <meta name="keywords" content="property management Kolkata, tenancy agreement Kolkata, registration support Kolkata, property consultant Kolkata, ConsultKaro">
+  <meta name="author" content="ConsultKaro">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#2f2822">
+  <link rel="canonical" href="https://www.consultkaro.org/">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ConsultKaro | Property Management Consultant">
+  <meta property="og:description" content="End-to-end property search, agreement, registration, and financial advisory support across Kolkata.">
+  <meta property="og:url" content="https://www.consultkaro.org/">
+  <meta property="og:image" content="https://www.consultkaro.org/images/hero1.jpg">
+  <meta property="og:site_name" content="ConsultKaro">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ConsultKaro | Property Management Consultant">
+  <meta name="twitter:description" content="End-to-end property support across Kolkata by local consultants.">
+  <meta name="twitter:image" content="https://www.consultkaro.org/images/hero1.jpg">
+  <title>ConsultKaro | Property Management Consultant</title>
 
-<title>ConsultKaro | Property Management Consultant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Sora:wght@600;700;800&amp;display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="icon" type="image/svg+xml" href="images/consultkaro-classic-logo.svg">
+  <link rel="alternate icon" type="image/png" href="images/logo.png">
+  <link rel="preload" as="image" href="images/hero1.jpg">
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-
-body{
-  font-family:'Poppins',sans-serif;
-  background:#0b1120;
-  color:#e5e7eb;
-}
-
-section{padding:90px 10%}
-h2{font-size:36px;color:#38bdf8;margin-bottom:25px}
-
-/* HEADER */
-header{
-  position:fixed;
-  top:0;
-  width:100%;
-  background:#020617;
-  padding:12px 10%;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  z-index:1000;
-}
-
-.logo img{height:60px}
-
-nav a{
-  margin-left:35px;
-  font-weight:600;
-  color:#e5e7eb;
-  text-decoration:none;
-}
-nav a:hover{color:#38bdf8}
-
-/* home */
-.home{
-  min-height:100vh;
-  display:flex;
-  align-items:center;
-  gap:40px;
-}
-
-.home-text{flex:1}
-.home h1{font-size:46px;margin-bottom:20px}
-.home span{color:#38bdf8}
-.home-slider{flex:1}
-
-/* BUTTONS */
-.btn{
-  display:inline-block;
-  margin-top:20px;
-  padding:14px 32px;
-  background:#38bdf8;
-  color:#020617;
-  border-radius:30px;
-  font-weight:600;
-  text-decoration:none;
-}
-.btn.alt{
-  background:transparent;
-  border:2px solid #38bdf8;
-  color:#38bdf8;
-  margin-left:15px;
-}
-
-/* SLIDER */
-.slider{
-  position:relative;
-  width:100%;
-  height:340px;
-  overflow:hidden;
-  border-radius:20px;
-  background:#020617;
-}
-.slide{
-  position:absolute;
-  inset:0;
-  opacity:0;
-  transition:opacity 1s ease-in-out;
-}
-.slide.active{opacity:1}
-.slide img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-
-/* GRID */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:30px;
-}
-
-/* CARDS */
-.card,.office-card,.contact-box{
-  background:#020617;
-  padding:25px;
-  border-radius:18px;
-}
-
-/* OFFICE IMAGES */
-.office-img{
-  width:100%;
-  height:200px;
-  object-fit:cover;
-  border-radius:14px;
-  margin:15px 0;
-}
-
-/* CONSULTANT IMAGES */
-.consultant-img{
-  width:100%;
-  height:220px;
-  object-fit:contain;
-  background:#020617;
-  padding:10px;
-  border-radius:14px;
-  margin:15px 0;
-}
-
-/* CONTACT IMAGE */
-.contact-img{
-  width:100%;
-  height:220px;
-  object-fit:cover;
-  border-radius:18px;
-}
-
-/* FREE CONSULTATION MODAL */
-.consult-modal{
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,0.75);
-  z-index:3000;
-  justify-content:center;
-  align-items:center;
-}
-
-.consult-box{
-  background:#020617;
-  padding:30px;
-  max-width:420px;
-  width:100%;
-  border-radius:18px;
-  position:relative;
-}
-
-.consult-box h2{
-  color:#38bdf8;
-  margin-bottom:20px;
-}
-
-.consult-box input{
-  width:100%;
-  padding:12px;
-  margin-bottom:15px;
-  border:none;
-  border-radius:10px;
-}
-
-.consult-submit{
-  width:100%;
-  padding:14px;
-  background:#38bdf8;
-  border:none;
-  border-radius:30px;
-  font-weight:600;
-  cursor:pointer;
-}
-
-.consult-close{
-  position:absolute;
-  top:12px;
-  right:18px;
-  font-size:26px;
-  cursor:pointer;
-}
-
-/* FOOTER */
-footer{
-  background:#020617;
-  padding:40px 10%;
-  text-align:center;
-}
-
-/* FLOATING SOCIAL */
-.floating-social{
-  position:fixed;
-  bottom:25px;
-  right:25px;
-  display:flex;
-  gap:12px;
-  z-index:999;
-}
-
-.floating-social a{
-  width:55px;
-  height:55px;
-  border-radius:50%;
-  color:#fff;
-  font-size:24px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-
-.whatsapp{background:#25d366}
-.facebook{background:#1877f2}
-.instagram{background:#e1306c}
-.linkedin{background:#0a66c2}
-
-/* MOBILE */
-@media(max-width:768px){
-  header{flex-direction:column}
-  .home{flex-direction:column;text-align:center}
-}
-
-
-
-
-/* =========================
-   MOBILE RESPONSIVE FIXES
-   (NO EXISTING CODE CHANGED)
-   ========================= */
-@media (max-width: 768px){
-
-  /* HEADER FIX */
-  header{
-    padding:12px 6%;
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  nav{
-    width:100%;
-    margin-top:10px;
-    display:flex;
-    flex-wrap:wrap;
-    gap:12px;
-  }
-
-  nav a{
-    margin-left:0;
-    padding:8px 0;
-    font-size:14px;
-  }
-
-  /* SECTION PADDING */
-  section{
-    padding:80px 6%;
-  }
-
-  /* HOME SECTION */
-  .home{
-    flex-direction:column;
-    text-align:center;
-  }
-
-  .home h1{
-    font-size:32px;
-  }
-
-  .home-slider{
-    width:100%;
-
-  }
-
-  .slider{
-    height:60vh;      /* Bigger responsive height */
-    min-height:280px; /* Prevents tiny slider */
-  }
-.slide img{
-    object-fit:cover;
-  }
-
-  /* BUTTONS */
-  .btn,
-  .btn.alt{
-    display:block;
-    width:100%;
-    margin:12px auto 0;
-  }
-
-  .btn.alt{
-    margin-left:0;
-  }
-
-  /* GRID STACK */
-  .grid{
-    grid-template-columns:1fr;
-  }
-
-  /* IMAGES SCALE */
-  .office-img,
-  .consultant-img,
-  .contact-img{
-    height:auto;
-  }
-
-  /* FOOTER */
-  footer{
-    padding:25px 6%;
-    font-size:14px;
-  }
-
-  /* FLOATING SOCIAL */
-  .floating-social{
-    right:12px;
-    bottom:12px;
-  }
-
-  .floating-social a{
-    width:48px;
-    height:48px;
-    font-size:20px;
-  }
-}
-
-
-/* HAMBURGER MENU */
-.menu-toggle{
-  display:none;
-  font-size:26px;
-  cursor:pointer;
-  color:#fff;
-}
-
-/* MOBILE MENU FIX */
-@media(max-width:768px){
-
-  header{
-    flex-direction:row;
-    justify-content:space-between;
-    align-items:center;
-  }
-
-  .menu-toggle{
-    display:block;
-  }
-
-  nav{
-    position:absolute;
-    top:70px;
-    left:0;
-    width:100%;
-    background:#020617;
-    flex-direction:column;
-    display:none;
-    padding:20px 6%;
-  }
-
-  nav a{
-    margin:10px 0;
-    font-size:16px;
-  }
-
-  nav.active{
-    display:flex;
-  }
-}
-
-/* ===== HEADER MOBILE FIX ===== */
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-}
-
-.menu-toggle{
-  margin-left:auto;
-}
-
-@media(max-width:768px){
-  nav{
-    width:100%;
-  }
-}
-
-
-</style>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "ConsultKaro",
+      "url": "https://www.consultkaro.org/",
+      "logo": "https://www.consultkaro.org/images/consultkaro-classic-logo.svg",
+      "description": "Property management consultant in Kolkata offering search, agreement, registration and financial advisory guidance.",
+      "telephone": "+91-8017061945",
+      "areaServed": "Kolkata, West Bengal, India",
+      "sameAs": [
+        "https://www.facebook.com/ConsultKaroKolkata",
+        "https://www.instagram.com/ConsultKaroKolkata",
+        "https://www.youtube.com/@consultkaro"
+      ]
+    }
+  </script>
 </head>
-
-<body>
-
-
-<header>
-  <div class="logo">ConsultKaro | Property Solutions in Kolkata </div>
-
-  <!-- Hamburger Menu -->
-  <div class="menu-toggle" id="menuToggle">
-    <i class="fas fa-bars"></i>
-  </div>
-
-  <nav id="mobileMenu">
-    <a href="#home">Home</a>
-    <a href="#services">Services</a>
-    <a href="#offices">Offices</a>
-    <a href="#consultant">Consultant</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
-
-
-
-<section id="home" class="home">
-  <div class="home-text">
-    <h1><span>ConsultKaro</span><br>Property Management Consultant</h1>
-    <p>From Searching to Agreement & Registration</p>
-
-    <a href="#services" class="btn alt">Explore Services</a>
-    <a href="javascript:void(0)" class="btn" id="openConsult">Free Consultation</a>
-  </div>
-
-  <div class="home-slider slider">
-    <div class="slide active"><img src="images/hero1.jpg"></div>
-    <div class="slide"><img src="images/hero2.jpg"></div>
-    <div class="slide"><img src="images/hero3.jpg"></div>
-  </div>
-</section>
-
-
-
-
-<section id="services">
-  <h2>Our Services</h2>
-  <div class="grid">
-    <div class="card">
-      <img src="images/property.png" class="office-img">
-      <h3>Property Management</h3>
-      <p>Property Searching , Agreement, Registration & Tenancy Agreement.</p>
-    </div>
-    <div class="card">
-      <img src="images/finance.png" class="office-img">
-      <h3>Financial Management</h3>
-      <p>Investment in Mutual funds, Share Market and Government Insurance Scheme.</p>
+<body class="is-loading">
+  <div class="site-loader" id="siteLoader" aria-live="polite" aria-label="Loading ConsultKaro website">
+    <div class="loader-card">
+      <img src="images/consultkaro-classic-logo.svg" alt="ConsultKaro logo" class="loader-logo">
+      <p class="loader-title">ConsultKaro</p>
+      <p class="loader-sub">Property Management Consultant</p>
+      <div class="loader-line"><span></span></div>
     </div>
   </div>
-</section>
 
-<section id="offices">
-  <h2>Our Offices – Kolkata</h2>
-  <div class="grid">
-    <div class="office-card">
-      <h3>Metiabruz Office</h3>
-      <img src="images/metiabruz.jpg" class="office-img">
-      <p>Garden Reach</p>
+  <a class="skip-link" href="#home">Skip to main content</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="#home">
+        <img src="images/consultkaro-classic-logo.svg" alt="ConsultKaro" class="brand-mark">
+        <span class="brand-text">
+          <span class="brand-name">ConsultKaro</span>
+          <small>Property Solutions in Kolkata</small>
+        </span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+        <i class="fa-solid fa-bars"></i>
+      </button>
+
+      <nav id="siteMenu" aria-label="Primary navigation">
+        <a class="nav-link" href="#home">Home</a>
+        <a class="nav-link" href="#services">Services</a>
+        <a class="nav-link" href="#process">How It Works</a>
+        <a class="nav-link" href="#offices">Offices</a>
+        <a class="nav-link" href="#consultants">Consultants</a>
+        <a class="nav-link" href="#contact">Contact</a>
+      </nav>
     </div>
-    <div class="office-card">
-      <h3>Gariahat Office</h3>
-      <img src="images/gariahat.jpg" class="office-img">
-      <p>Ballygunge Gardens</p>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div class="hero-copy reveal">
+          <span class="eyebrow"><i class="fa-solid fa-building-shield"></i> End-to-End Property Management</span>
+          <h1>Professional Property Consulting for Renting, Buying, Registration, and Financial Planning.</h1>
+          <p>
+            ConsultKaro helps families, professionals, and investors navigate every step of the property lifecycle in Kolkata, from search and documentation to agreement, registration, and post-deal management.
+          </p>
+          <ul class="hero-bullets">
+            <li><i class="fa-solid fa-check"></i> Dedicated support across Metiabruz, Gariahat, and New Town.</li>
+            <li><i class="fa-solid fa-check"></i> Legal-first documentation and tenancy workflow guidance.</li>
+            <li><i class="fa-solid fa-check"></i> Optional investment advisory for long-term wealth planning.</li>
+          </ul>
+          <div class="btn-row">
+            <button class="btn primary" type="button" id="openConsultHero"><i class="fa-solid fa-phone-volume"></i> Book Free Consultation</button>
+            <a class="btn ghost" href="#services"><i class="fa-solid fa-arrow-right"></i> View Services</a>
+          </div>
+        </div>
+
+        <div class="hero-visual reveal">
+          <div class="hero-slider" id="heroSlider">
+            <article class="hero-slide active">
+              <img src="images/hero1.jpg" alt="Kolkata property support">
+              <p class="slide-caption">Property Search and Tenant Assistance</p>
+            </article>
+            <article class="hero-slide">
+              <img src="images/hero2.jpg" alt="Agreement and registration support">
+              <p class="slide-caption">Agreement and Registration Guidance</p>
+            </article>
+            <article class="hero-slide">
+              <img src="images/hero3.jpg" alt="Consulting for investment and financial planning">
+              <p class="slide-caption">Investment and Financial Planning Insights</p>
+            </article>
+          </div>
+          <div class="badge-card">
+            <p>Fast Response</p>
+            <strong>Same-Day</strong>
+            <p style="margin-top: 5px;">Consultation Callback</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-strip">
+      <div class="container trust-grid">
+        <div class="trust-item reveal">
+          <strong>3</strong>
+          <span>Kolkata Offices</span>
+        </div>
+        <div class="trust-item reveal">
+          <strong>360 deg</strong>
+          <span>Property Workflow</span>
+        </div>
+        <div class="trust-item reveal">
+          <strong>Legal-First</strong>
+          <span>Documentation Support</span>
+        </div>
+        <div class="trust-item reveal">
+          <strong>Local</strong>
+          <span>Neighborhood Expertise</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container">
+        <div class="section-top reveal">
+          <span class="eyebrow"><i class="fa-solid fa-layer-group"></i> Service Lines</span>
+          <h2>Everything You Need from Property Search to Financial Management</h2>
+          <p>Integrated consulting for rental, ownership, compliance, and investment decisions.</p>
+        </div>
+        <div class="cards-3">
+          <article class="service-card reveal">
+            <i class="fa-solid fa-house"></i>
+            <h3>Property Management</h3>
+            <p>Property searching, market matching, tenant coordination, and end-to-end transaction support tailored to your budget and goals.</p>
+          </article>
+          <article class="service-card reveal">
+            <i class="fa-solid fa-file-signature"></i>
+            <h3>Agreement and Registration</h3>
+            <p>Structured guidance for agreement drafting, tenancy paperwork, and registration readiness with legal-process clarity.</p>
+          </article>
+          <article class="service-card reveal">
+            <i class="fa-solid fa-chart-line"></i>
+            <h3>Financial Advisory</h3>
+            <p>Advisory support on mutual funds, equity exposure, and government-backed schemes to build disciplined long-term wealth.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="process" style="padding-top: 0;">
+      <div class="container">
+        <div class="section-top reveal">
+          <span class="eyebrow"><i class="fa-solid fa-diagram-project"></i> Simple Process</span>
+          <h2>How ConsultKaro Works with You</h2>
+          <p>A practical process designed to reduce confusion and move quickly from discovery to closure.</p>
+        </div>
+        <div class="process-grid">
+          <article class="process-card reveal">
+            <span class="step">1</span>
+            <h3>Requirement Call</h3>
+            <p>Share location, budget, timeline, and preferred property type in a focused first discussion.</p>
+          </article>
+          <article class="process-card reveal">
+            <span class="step">2</span>
+            <h3>Shortlist and Visit</h3>
+            <p>Receive curated options with practical advice on neighborhood strengths, risks, and fit.</p>
+          </article>
+          <article class="process-card reveal">
+            <span class="step">3</span>
+            <h3>Documentation</h3>
+            <p>Finalize terms with support on agreement, tenancy details, and registration preparation.</p>
+          </article>
+          <article class="process-card reveal">
+            <span class="step">4</span>
+            <h3>Post-Deal Support</h3>
+            <p>Continue with tenancy management and financial planning guidance as needed.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="offices">
+      <div class="container">
+        <div class="section-top reveal">
+          <span class="eyebrow"><i class="fa-solid fa-location-dot"></i> Presence in Kolkata</span>
+          <h2>Consult with Teams Near You</h2>
+          <p>On-ground consultants across major zones of Kolkata for easier meetings and faster execution.</p>
+        </div>
+        <div class="cards-3">
+          <article class="office-card reveal">
+            <img src="images/metiabruz.jpg" alt="Metiabruz office location" class="image-card" loading="lazy">
+            <div class="office-body">
+              <h3>Metiabruz Office</h3>
+              <p>Support for clients around Garden Reach and surrounding zones.</p>
+              <p class="office-meta"><i class="fa-solid fa-map-pin"></i> Garden Reach, Kolkata</p>
+            </div>
+          </article>
+          <article class="office-card reveal">
+            <img src="images/gariahat.jpg" alt="Gariahat office location" class="image-card" loading="lazy">
+            <div class="office-body">
+              <h3>Gariahat Office</h3>
+              <p>Advisory coverage for Ballygunge Gardens and South Kolkata corridors.</p>
+              <p class="office-meta"><i class="fa-solid fa-map-pin"></i> Ballygunge Gardens, Kolkata</p>
+            </div>
+          </article>
+          <article class="office-card reveal">
+            <img src="images/newtown.jpg" alt="New Town office location" class="image-card" loading="lazy">
+            <div class="office-body">
+              <h3>New Town Office</h3>
+              <p>Specialized support for new developments and high-growth localities.</p>
+              <p class="office-meta"><i class="fa-solid fa-map-pin"></i> Action Area 1, New Town</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="consultants" style="padding-top: 0;">
+      <div class="container">
+        <div class="section-top reveal">
+          <span class="eyebrow"><i class="fa-solid fa-users"></i> Consultant Team</span>
+          <h2>Regional Consultants You Can Reach Directly</h2>
+          <p>Work with local consultants who understand both neighborhood context and transaction realities.</p>
+        </div>
+        <div class="cards-3">
+          <article class="consultant-card reveal">
+            <img src="images/aftab.jpg" alt="Consultant Aftab Alam" class="consultant-image" loading="lazy">
+            <div class="consultant-body">
+              <h3>Aftab Alam</h3>
+              <p>Consultant - Metiabruz</p>
+              <div class="consultant-meta">
+                <span>Law Intern</span>
+                <span>BA, LL.B (Pursuing)</span>
+                <a href="tel:+917439297280"><i class="fa-solid fa-phone"></i> +91 74392 97280</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="consultant-card reveal">
+            <img src="images/arnab.jpg" alt="Consultant Arnab Bera" class="consultant-image" loading="lazy">
+            <div class="consultant-body">
+              <h3>Arnab Bera</h3>
+              <p>Consultant - Gariahat</p>
+              <div class="consultant-meta">
+                <span>Law Intern</span>
+                <span>MTech, LL.B (Pursuing)</span>
+                <a href="tel:+919830015498"><i class="fa-solid fa-phone"></i> +91 98300 15498</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="consultant-card reveal">
+            <img src="images/pratik.jpg" alt="Consultant Pratik Majumder" class="consultant-image" loading="lazy">
+            <div class="consultant-body">
+              <h3>Pratik Majumder</h3>
+              <p>Consultant - New Town</p>
+              <div class="consultant-meta">
+                <span>Law Intern</span>
+                <span>MBA, LL.B (Pursuing)</span>
+                <a href="tel:+919830419552"><i class="fa-solid fa-phone"></i> +91 98304 19552</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="container">
+        <div class="section-top reveal">
+          <span class="eyebrow"><i class="fa-solid fa-message"></i> Reach Out</span>
+          <h2>Start with a Free Consultation</h2>
+          <p>Talk to our team about your current property requirement and get a practical action plan.</p>
+        </div>
+
+        <div class="contact-grid">
+          <article class="contact-panel reveal">
+            <h3>Direct Contact</h3>
+            <p>Available for new client calls and WhatsApp discussions across Kolkata.</p>
+            <div class="contact-list">
+              <a href="tel:+918017061945"><i class="fa-solid fa-phone"></i> +91 80170 61945</a>
+              <a href="tel:+917439297280"><i class="fa-solid fa-phone-volume"></i> +91 74392 97280</a>
+              <a href="https://wa.me/918017061945" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp Chat</a>
+              <a href="https://www.youtube.com/@consultkaro" target="_blank" rel="noopener"><i class="fa-brands fa-youtube"></i> YouTube Channel</a>
+            </div>
+            <div class="btn-row">
+              <button class="btn primary" type="button" id="openConsultContact">Request Consultation</button>
+            </div>
+          </article>
+
+          <div class="contact-images reveal">
+            <img src="images/contact1.png" alt="ConsultKaro contact visual 1" loading="lazy">
+            <img src="images/contact2.png" alt="ConsultKaro contact visual 2" loading="lazy">
+          </div>
+        </div>
+
+        <div class="cta-banner reveal">
+          <div>
+            <h3>Need Immediate Property Guidance?</h3>
+            <p>Share your requirement and receive a callback from a local consultant.</p>
+          </div>
+          <a href="https://wa.me/917439297280" target="_blank" rel="noopener" class="btn ghost">Open WhatsApp</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section faq-section">
+      <div class="container">
+        <div class="section-top reveal">
+          <span class="eyebrow"><i class="fa-solid fa-circle-question"></i> FAQs</span>
+          <h2>Frequently Asked Questions</h2>
+          <p>Quick answers to common client questions before you book a consultation.</p>
+        </div>
+        <div class="faq-grid reveal">
+          <details>
+            <summary>Do you help with both rental and purchase properties?</summary>
+            <p>Yes. ConsultKaro supports both rental and purchase journeys, including property search, agreement, and registration guidance.</p>
+          </details>
+          <details>
+            <summary>Can I book only documentation support?</summary>
+            <p>Yes. You can engage the team only for agreement, tenancy documentation, or registration process support.</p>
+          </details>
+          <details>
+            <summary>Do you provide financial advisory as well?</summary>
+            <p>Yes. We provide advisory guidance on mutual funds, share market exposure, and government-backed plans based on your goals.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; <span id="year"></span> ConsultKaro. All Rights Reserved.</p>
     </div>
-    <div class="office-card">
-      <h3>New Town Office</h3>
-      <img src="images/newtown.jpg" class="office-img">
-      <p>Action Area 1 , New Town</p>
+  </footer>
+
+  <div class="floating-social" aria-label="Social media links">
+    <a href="https://www.facebook.com/ConsultKaroKolkata" class="facebook" target="_blank" rel="noopener" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.instagram.com/ConsultKaroKolkata" class="instagram" target="_blank" rel="noopener" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.youtube.com/@consultkaro" class="youtube" target="_blank" rel="noopener" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    <a href="https://wa.me/918017061945" class="whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+  </div>
+
+  <div class="mobile-actions" aria-label="Quick actions">
+    <a href="tel:+918017061945"><i class="fa-solid fa-phone"></i> Call Now</a>
+    <a href="https://wa.me/918017061945" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+  </div>
+
+  <div class="consult-modal" id="consultModal" aria-hidden="true">
+    <div class="consult-box">
+      <button class="consult-close" id="closeConsult" aria-label="Close consultation form">&times;</button>
+      <h3>Book a Free Consultation</h3>
+      <p>Fill in your details. We will open WhatsApp with a ready message.</p>
+      <form class="consult-form" id="consultForm">
+        <input type="text" id="cName" placeholder="Full Name" required>
+        <input type="tel" id="cPhone" placeholder="Mobile Number" required>
+        <textarea id="cQuery" rows="3" placeholder="Your Requirement"></textarea>
+        <button type="submit" class="btn primary">Send on WhatsApp</button>
+      </form>
     </div>
   </div>
-</section>
 
-<section id="consultant">
-  <h2>Consultant in Kolkata</h2>
-  <div class="grid">
-    <div class="office-card">
-      <h3>Consultant in Metiabruz</h3>
-      <img src="images/aftab.jpg" class="consultant-img">
-      <p>Aftab Alam [Law Intern]</p>
-      <p>[BA, LL.B pursuing]</p>
-      <p>Mobile 7439297280</p>
-    </div>
-    <div class="office-card">
-      <h3>Consultant in Gariahat </h3>
-      <img src="images/arnab.jpg" class="consultant-img">
-      <p>Arnab Bera [Law Intern]</p>
-      <p>[MTech, LL.B pursuing]</p>
-      <p>Mobile 9830015498</p>
-    </div>
-    <div class="office-card">
-      <h3>Consultant in NewTown</h3>
-      <img src="images/pratik.jpg" class="consultant-img">
-      <p>Pratik Majumder [Law Intern]</p>
-      <p>[MBA, LL.B pursuing]</p>
-      <p>Mobile 9830419552</p>
-    </div>
-  </div>
-</section>
-
-<section id="contact">
-  <h2>Contact Us</h2>
-  <div class="grid">
-    <img src="images/contact1.png" class="contact-img">
-	<img src="images/contact2.png" class="contact-img">
-
-    </div>
-  </div>
-</section>
-
-<footer>
-  <p>© 2025 ConsultKaro. All Rights Reserved.</p>
-</footer>
-
-<div class="floating-social">
-  <a href="https://www.facebook.com/ConsultKaroKolkata" class="facebook" target="_blank"><i class="fab fa-facebook-f"></i></a>
-  <a href="https://www.instagram.com/ConsultKaroKolkata" class="instagram" target="_blank"><i class="fab fa-instagram"></i></a>
-  <a href="https://www.youtube.com/@consultkaro" class="youtube" target="_blank"><i class="fab fa-youtube"></i></a>
-  <a href="https://wa.me/918017061945" class="whatsapp" target="_blank"><i class="fab fa-whatsapp"></i></a>
-</div>
-
-<!-- FREE CONSULTATION MODAL -->
-<div class="consult-modal" id="consultModal">
-  <div class="consult-box">
-    <span class="consult-close" id="closeConsult">&times;</span>
-    <h2>Free Consultation</h2>
-    <form id="consultForm">
-      <input id="cName" placeholder="Full Name" required>
-      <input id="cPhone" placeholder="Mobile Number" required>
-      <input id="cQuery" placeholder="Your Requirement">
-      <button class="consult-submit">Submit</button>
-    </form>
-  </div>
-</div>
-
-<script>
-let slides=document.querySelectorAll('.slide');
-let index=0;
-setInterval(()=>{
-  slides[index].classList.remove('active');
-  index=(index+1)%slides.length;
-  slides[index].classList.add('active');
-},5000);
-
-const openConsult=document.getElementById("openConsult");
-const closeConsult=document.getElementById("closeConsult");
-const consultModal=document.getElementById("consultModal");
-
-openConsult.onclick=function(){
-  consultModal.style.display="flex";
-};
-
-closeConsult.onclick=function(){
-  consultModal.style.display="none";
-};
-
-document.getElementById("consultForm").onsubmit=function(e){
-  e.preventDefault();
-  const msg =
-    "Free Consultation Request%0A"+
-    "Name: "+cName.value+"%0A"+
-    "Phone: "+cPhone.value+"%0A"+
-    "Requirement: "+cQuery.value;
-  window.open("https://wa.me/917439297280?text="+msg,"_blank");
-  consultModal.style.display="none";
-};
-
-// Hamburger toggle
-const menuToggle = document.getElementById("menuToggle");
-const mobileMenu = document.getElementById("mobileMenu");
-
-menuToggle.onclick = function(){
-  mobileMenu.classList.toggle("active");
-};
-
-</script>
-
+  <script src="script.js" defer></script>
 </body>
 </html>

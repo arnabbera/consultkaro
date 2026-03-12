@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">ConsultKaro Classic Logo</title>
+  <desc id="desc">Classic monogram logo for ConsultKaro with a property roof motif.</desc>
+  <defs>
+    <linearGradient id="gBase" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#201812"/>
+      <stop offset="100%" stop-color="#3e2f21"/>
+    </linearGradient>
+    <linearGradient id="gGold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#d5b27f"/>
+      <stop offset="100%" stop-color="#a77e4a"/>
+    </linearGradient>
+  </defs>
+
+  <circle cx="256" cy="256" r="236" fill="url(#gBase)" stroke="#9f7847" stroke-width="6"/>
+  <circle cx="256" cy="256" r="206" fill="none" stroke="#d5b27f" stroke-width="2" opacity="0.8"/>
+  <circle cx="256" cy="256" r="188" fill="none" stroke="#8f6b40" stroke-width="1.5" opacity="0.75"/>
+
+  <path d="M168 198L256 128L344 198" fill="none" stroke="url(#gGold)" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M194 198H318" fill="none" stroke="#8f6b40" stroke-width="2"/>
+
+  <path d="M302 194A78 78 0 1 0 302 318" fill="none" stroke="#e7c997" stroke-width="17" stroke-linecap="round"/>
+  <path d="M222 190V322M222 255L296 190M250 250L300 322" fill="none" stroke="url(#gGold)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <path d="M149 342C184 367 220 380 256 380C292 380 328 367 363 342" fill="none" stroke="#8f6b40" stroke-width="2" opacity="0.75"/>
+  <circle cx="149" cy="342" r="4.5" fill="#c69c66"/>
+  <circle cx="363" cy="342" r="4.5" fill="#c69c66"/>
+
+  <text x="256" y="425" text-anchor="middle" fill="#d8b98b" font-size="34" font-family="Georgia, serif" letter-spacing="7">CONSULTKARO</text>
+</svg>
