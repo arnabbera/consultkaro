@@ -761,12 +761,24 @@
     }
 
     footer {
-      margin-top: 84px;
-      border-top: 1px solid var(--line);
-      padding: 28px 0 36px;
-      color: #6a5f53;
+      margin-top: 0;
+      border-top: 0;
+      padding: 44px 0;
+      background: #241f1b;
+      color: #f2ece5;
       font-weight: 600;
       text-align: center;
+    }
+
+    footer .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    footer p {
+      margin: 0;
     }
 
     .floating-social {
@@ -1064,17 +1076,30 @@ footer nav {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px 18px;
-  margin-top: 12px;
+  gap: 10px 22px;
+  margin: 0;
 }
 
 footer nav a {
-  color: inherit;
+  color: #e8ddd2;
   text-decoration: none;
   font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 footer nav a:hover,
 footer nav a:focus-visible {
+  color: #d9aa66;
   text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+@media (max-width: 640px) {
+  footer {
+    padding: 36px 0 92px;
+  }
+
+  footer nav {
+    gap: 10px 16px;
+  }
 }
