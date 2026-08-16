@@ -22,20 +22,25 @@
     </section>
 
     <section class="panel hidden" id="editorPanel">
-      <div style="display:flex;justify-content:space-between;gap:18px;align-items:start;flex-wrap:wrap"><div><h1>Create a Post</h1><p id="signedInAs"></p></div><button class="btn secondary" id="logout" type="button">Sign out</button></div>
+      <div style="display:flex;justify-content:space-between;gap:18px;align-items:start;flex-wrap:wrap"><div><h1>Posts Prepared by ChatGPT</h1><p id="signedInAs"></p><p>Select a prepared post, review the text, add both images and publish.</p></div><button class="btn secondary" id="logout" type="button">Sign out</button></div>
+      <div id="preparedPosts" class="prepared-posts" aria-live="polite"></div>
+    </section>
+
+    <section class="panel hidden" id="postEditorPanel">
+      <div class="editor-heading"><div><p class="eyebrow">Editing prepared post</p><h1 id="editorTitle">Edit Post</h1></div><button class="btn secondary" id="backToPosts" type="button">← Back to posts</button></div>
       <form id="postForm">
         <div class="form-grid">
           <div class="field full"><label for="title">Post title</label><input id="title" name="title" maxlength="120" required></div>
-          <div class="field"><label for="slug">URL slug</label><input id="slug" name="slug" pattern="[a-z0-9-]+" placeholder="common-property-frauds-india" required></div>
+          <div class="field"><label for="slug">URL slug</label><input id="slug" name="slug" pattern="[a-z0-9-]+" placeholder="common-property-frauds-india" readonly required></div>
           <div class="field"><label for="status">Status</label><select id="status" name="status"><option value="published">Published</option><option value="draft">Draft</option></select></div>
           <div class="field full"><label for="excerpt">Short summary</label><textarea id="excerpt" name="excerpt" maxlength="300" required></textarea></div>
           <div class="field full"><label for="content">Post content</label><textarea id="content" name="content" required></textarea><span class="hint">Use a blank line between paragraphs. Plain text is stored safely.</span></div>
-          <div class="field"><label for="landscapeImage">16:9 landscape image</label><input id="landscapeImage" name="landscapeImage" type="file" accept="image/png,image/jpeg,image/webp" required><span class="hint">Recommended: 1920 × 1080, maximum 5 MB.</span></div>
-          <div class="field"><label for="portraitImage">9:16 portrait image</label><input id="portraitImage" name="portraitImage" type="file" accept="image/png,image/jpeg,image/webp" required><span class="hint">Recommended: 1080 × 1920, maximum 5 MB.</span></div>
+          <div class="field"><label for="landscapeImage">16:9 landscape image</label><input id="landscapeImage" name="landscapeImage" type="file" accept="image/png,image/jpeg,image/webp"><span class="hint">Recommended: 1920 × 1080, maximum 5 MB.</span></div>
+          <div class="field"><label for="portraitImage">9:16 portrait image</label><input id="portraitImage" name="portraitImage" type="file" accept="image/png,image/jpeg,image/webp"><span class="hint">Recommended: 1080 × 1920, maximum 5 MB.</span></div>
           <div class="field full"><div class="preview-grid"><div class="preview landscape"><strong>Landscape preview</strong><img id="landscapePreview" alt=""></div><div class="preview portrait"><strong>Portrait preview</strong><img id="portraitPreview" alt=""></div></div></div>
         </div>
-        <div class="actions"><button class="btn" type="submit">Upload images and publish</button><a class="btn secondary" href="/posts/">View posts</a></div>
-        <p class="status" id="publishStatus" role="status" aria-live="polite">Complete both image fields before publishing.</p>
+        <div class="actions"><button class="btn" type="submit">Save changes and publish</button><a class="btn secondary" href="/posts/">View posts</a></div>
+        <p class="status" id="publishStatus" role="status" aria-live="polite">Review the prepared content and add or replace both images.</p>
       </form>
     </section>
   </div></main>

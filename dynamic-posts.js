@@ -13,11 +13,15 @@ if (!Object.values(firebaseConfig).some((value) => String(value).startsWith("REP
         const post = item.data();
         const card = document.createElement("article");
         card.className = "post-card";
+        card.dataset.postSlug = item.id;
         const href = `/post/?id=${encodeURIComponent(item.id)}`;
         card.innerHTML = `<a href="${href}"><picture><source media="(max-width:760px)" srcset="${post.portraitUrl}"><img src="${post.landscapeUrl}" alt="" loading="lazy"></picture></a><div class="post-card-body"><p class="post-date">Latest post</p><h2><a href="${href}"></a></h2><p class="excerpt"></p><a class="read-more" href="${href}">Read full post</a></div>`;
         card.querySelector("h2 a").textContent = post.title;
         card.querySelector(".excerpt").textContent = post.excerpt;
-        feed.prepend(card);
+        const staticLink = feed.querySelector(`a[href="/posts/${item.id}/"]`);
+        const staticCard = staticLink?.closest(".post-card");
+        if (staticCard) staticCard.replaceWith(card);
+        else feed.prepend(card);
       });
     } catch (error) { console.error("Unable to load admin posts", error); }
   }
