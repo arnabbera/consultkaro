@@ -19,6 +19,7 @@ const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 let drafts = [];
 let currentPost = null;
+let databasePermissionBlocked = false;
 
 function setStatus(node, message, kind = "") { node.textContent = message; node.className = `status ${kind}`.trim(); }
 function showDashboard() { dashboard.classList.remove("hidden"); postEditor.classList.add("hidden"); }
@@ -27,15 +28,32 @@ function watchPreview(inputId, imageId) { document.querySelector(inputId).addEve
 watchPreview("#landscapeImage", "#landscapePreview");
 watchPreview("#portraitImage", "#portraitPreview");
 
+async function getSavedPost(slug) {
+  try {
+    return await getDoc(doc(db, "posts", slug));
+  } catch (error) {
+    if (error.code === "permission-denied") {
+      databasePermissionBlocked = true;
+      return null;
+    }
+    throw error;
+  }
+}
+
+function permissionMessage() {
+  return "Prepared posts are available, but Firebase publishing permissions are not active yet. Deploy the repository Firestore and Storage rules before publishing.";
+}
+
 async function loadPreparedPosts() {
   preparedPosts.innerHTML = "<p>Loading prepared posts…</p>";
   const response = await fetch("/admin/prepared-posts.json", { cache: "no-store" });
   drafts = await response.json();
   preparedPosts.innerHTML = "";
+  databasePermissionBlocked = false;
   if (!drafts.length) { preparedPosts.innerHTML = "<p>No prepared posts are waiting. Ask ChatGPT to create the next post.</p>"; return; }
   for (const draft of drafts) {
-    const saved = await getDoc(doc(db, "posts", draft.slug));
-    const state = saved.exists() ? saved.data().status : "prepared";
+    const saved = await getSavedPost(draft.slug);
+    const state = saved?.exists() ? saved.data().status : "prepared";
     const card = document.createElement("article");
     card.className = "prepared-post";
     card.innerHTML = `<div><h2></h2><p></p><span class="prepared-badge"></span></div><button class="btn" type="button">Edit & add images</button>`;
@@ -45,17 +63,23 @@ async function loadPreparedPosts() {
     card.querySelector("button").addEventListener("click", () => editPreparedPost(draft));
     preparedPosts.append(card);
   }
+  if (databasePermissionBlocked) {
+    const notice = document.createElement("p");
+    notice.className = "status error permissions-notice";
+    notice.textContent = permissionMessage();
+    preparedPosts.prepend(notice);
+  }
 }
 
 async function editPreparedPost(draft) {
-  const saved = await getDoc(doc(db, "posts", draft.slug));
-  currentPost = { ...draft, ...(saved.exists() ? saved.data() : {}) };
+  const saved = await getSavedPost(draft.slug);
+  currentPost = { ...draft, ...(saved?.exists() ? saved.data() : {}) };
   form.title.value = currentPost.title || ""; form.slug.value = draft.slug; form.excerpt.value = currentPost.excerpt || ""; form.content.value = currentPost.content || ""; form.status.value = currentPost.status || "draft";
   form.landscapeImage.value = ""; form.portraitImage.value = "";
   showPreview("#landscapePreview", currentPost.landscapeUrl); showPreview("#portraitPreview", currentPost.portraitUrl);
   document.querySelector("#editorTitle").textContent = currentPost.title;
   dashboard.classList.add("hidden"); postEditor.classList.remove("hidden");
-  setStatus(publishStatus, "Review the prepared content and add or replace both images.");
+  setStatus(publishStatus, databasePermissionBlocked ? permissionMessage() : "Review the prepared content and add or replace both images.", databasePermissionBlocked ? "error" : "");
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
 
@@ -84,5 +108,8 @@ form.addEventListener("submit", async (event) => {
     currentPost = { ...currentPost, landscapeUrl, portraitUrl, status: form.status.value };
     setStatus(publishStatus, "Changes saved successfully. The post is available in the Posts section.", "success");
     await loadPreparedPosts();
-  } catch (error) { setStatus(publishStatus, error.message, "error"); }
+  } catch (error) {
+    const message = error.code === "permission-denied" || error.code === "storage/unauthorized" ? permissionMessage() : error.message;
+    setStatus(publishStatus, message, "error");
+  }
 });
