@@ -67,7 +67,7 @@ onAuthStateChanged(auth, async (user) => {
   const allowed = user?.email?.toLowerCase() === ADMIN_EMAIL && user.emailVerified;
   if (user && !allowed) await signOut(auth);
   loginPanel.classList.toggle("hidden", allowed); dashboard.classList.toggle("hidden", !allowed); postEditor.classList.add("hidden");
-  if (allowed) { document.querySelector("#signedInAs").textContent = `Signed in as ${user.email}`; try { await loadPreparedPosts(); } catch (error) { preparedPosts.textContent = `Unable to load prepared posts: ${error.message}`; } }
+  if (allowed) { try { await loadPreparedPosts(); } catch (error) { preparedPosts.textContent = `Unable to load prepared posts: ${error.message}`; } }
 });
 
 form.addEventListener("submit", async (event) => {
