@@ -10,7 +10,7 @@ The admin editor is already restricted in both the interface and Firebase rules 
    - `consultkaro.org`
    - `www.consultkaro.org`
 4. Create a Firestore database and a Firebase Storage bucket.
-5. Register a Firebase **Web app**. Copy its public configuration values into `firebase-config.js`.
+5. The existing `consult-karo` Web app configuration is already present in `firebase-config.js`.
 6. Deploy the included access rules from the project directory:
 
    ```bash
