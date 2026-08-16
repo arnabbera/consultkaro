@@ -68,8 +68,8 @@
             <div class="field"><label for="status">Status</label><select id="status" name="status"><option value="published">Published</option><option value="draft">Draft</option></select></div>
             <div class="field full"><label for="excerpt">Short summary</label><textarea id="excerpt" name="excerpt" maxlength="300" required></textarea></div>
             <div class="field full"><label for="content">Post content</label><textarea id="content" name="content" required></textarea><span class="hint">Use a blank line between paragraphs.</span></div>
-            <div class="field upload-field"><label for="landscapeImage">16:9 landscape image</label><input id="landscapeImage" name="landscapeImage" type="file" accept="image/png,image/jpeg,image/webp"><span class="hint">Recommended: 1920 × 1080, maximum 5 MB.</span></div>
-            <div class="field upload-field"><label for="portraitImage">9:16 portrait image</label><input id="portraitImage" name="portraitImage" type="file" accept="image/png,image/jpeg,image/webp"><span class="hint">Recommended: 1080 × 1920, maximum 5 MB.</span></div>
+            <div class="field upload-field"><label for="landscapeImage">16:9 landscape image</label><input id="landscapeImage" name="landscapeImage" type="file" accept="image/png,image/jpeg,image/webp"><span class="hint">The browser will optimise it to 1600 × 900 WebP before publishing.</span></div>
+            <div class="field upload-field"><label for="portraitImage">9:16 portrait image</label><input id="portraitImage" name="portraitImage" type="file" accept="image/png,image/jpeg,image/webp"><span class="hint">The browser will optimise it to 900 × 1600 WebP before publishing.</span></div>
             <div class="field full"><div class="preview-grid"><div class="preview landscape"><strong>Landscape preview</strong><img id="landscapePreview" alt=""></div><div class="preview portrait"><strong>Portrait preview</strong><img id="portraitPreview" alt=""></div></div></div>
           </div>
           <div class="actions"><button class="btn" type="submit">Save changes and publish</button><a class="btn secondary" href="/posts/">View posts</a></div>

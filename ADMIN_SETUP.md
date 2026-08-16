@@ -9,12 +9,12 @@ The admin editor is already restricted in both the interface and Firebase rules 
 3. In **Authentication > Settings > Authorised domains**, add:
    - `consultkaro.org`
    - `www.consultkaro.org`
-4. Create a Firestore database and a Firebase Storage bucket.
+4. Create a Firestore database. Firebase Storage is not required for post images; the admin portal optimises both images and stores them with the protected Firestore post record.
 5. The existing `consult-karo` Web app configuration is already present in `firebase-config.js`.
 6. Deploy the included access rules from the project directory:
 
    ```bash
-   firebase deploy --only firestore:rules,storage
+   firebase deploy --only firestore:rules
    ```
 
 The Firebase Web configuration is safe to expose in a browser. Access is enforced by `firestore.rules` and `storage.rules`, which require a verified token for `beraarnab@gmail.com`.
@@ -26,4 +26,4 @@ Open `https://www.consultkaro.org/admin/`, sign in with the authorised account, 
 - 16:9 landscape image (recommended 1920 × 1080)
 - 9:16 portrait image (recommended 1080 × 1920)
 
-Published posts are stored in Firestore, images are stored under `posts/{slug}/` in Firebase Storage, and published entries are loaded at the top of the Posts page.
+Published posts and their browser-optimised WebP images are stored in Firestore, and published entries are loaded at the top of the Posts page.

@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
 import { getFirestore, doc, getDoc, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
-import { getStorage, getDownloadURL, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-storage.js";
 import { ADMIN_EMAIL, firebaseConfig } from "/firebase-config.js";
 
 const loginPanel = document.querySelector("#loginPanel");
@@ -14,7 +13,6 @@ const form = document.querySelector("#postForm");
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-const storage = getStorage(app);
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({ prompt: "select_account" });
 let drafts = [];
@@ -41,7 +39,36 @@ async function getSavedPost(slug) {
 }
 
 function permissionMessage() {
-  return "Prepared posts are available, but Firebase publishing permissions are not active yet. Deploy the repository Firestore and Storage rules before publishing.";
+  return "Prepared posts are available, but Firestore publishing permissions are not active yet. Deploy the repository Firestore rules before publishing.";
+}
+
+function loadImage(file) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.onload = () => { URL.revokeObjectURL(image.src); resolve(image); };
+    image.onerror = () => reject(new Error(`Unable to read ${file.name}.`));
+    image.src = URL.createObjectURL(file);
+  });
+}
+
+async function optimizeImage(file, width, height, maximumBytes = 290000) {
+  const image = await loadImage(file);
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext("2d", { alpha: false });
+  context.fillStyle = "#07101d";
+  context.fillRect(0, 0, width, height);
+  const scale = Math.min(width / image.naturalWidth, height / image.naturalHeight);
+  const drawWidth = Math.round(image.naturalWidth * scale);
+  const drawHeight = Math.round(image.naturalHeight * scale);
+  context.drawImage(image, Math.round((width - drawWidth) / 2), Math.round((height - drawHeight) / 2), drawWidth, drawHeight);
+  for (const quality of [0.88, 0.8, 0.72, 0.64, 0.56]) {
+    const dataUrl = canvas.toDataURL("image/webp", quality);
+    const bytes = Math.ceil((dataUrl.length - dataUrl.indexOf(",") - 1) * 0.75);
+    if (bytes <= maximumBytes) return dataUrl;
+  }
+  throw new Error(`${file.name} could not be compressed below the safe publishing size. Please use a simpler or smaller image.`);
 }
 
 async function loadPreparedPosts() {
@@ -100,16 +127,18 @@ form.addEventListener("submit", async (event) => {
   if ([landscape, portrait].filter(Boolean).some((file) => file.size > 5 * 1024 * 1024)) return setStatus(publishStatus, "Each image must be smaller than 5 MB.", "error");
   if ((!landscape && !currentPost.landscapeUrl) || (!portrait && !currentPost.portraitUrl)) return setStatus(publishStatus, "Please add both the 16:9 and 9:16 images before publishing.", "error");
   try {
-    setStatus(publishStatus, "Saving the edited post and images…");
+    setStatus(publishStatus, "Optimising images and saving the post…");
     let landscapeUrl = currentPost.landscapeUrl; let portraitUrl = currentPost.portraitUrl;
-    if (landscape) { const imageRef = ref(storage, `posts/${currentPost.slug}/landscape-${Date.now()}-${landscape.name}`); await uploadBytes(imageRef, landscape); landscapeUrl = await getDownloadURL(imageRef); }
-    if (portrait) { const imageRef = ref(storage, `posts/${currentPost.slug}/portrait-${Date.now()}-${portrait.name}`); await uploadBytes(imageRef, portrait); portraitUrl = await getDownloadURL(imageRef); }
+    if (landscape) landscapeUrl = await optimizeImage(landscape, 1600, 900);
+    if (portrait) portraitUrl = await optimizeImage(portrait, 900, 1600);
+    const combinedImageCharacters = (landscapeUrl?.length || 0) + (portraitUrl?.length || 0);
+    if (combinedImageCharacters > 820000) throw new Error("The two optimised images are still too large to publish safely. Please select simpler images.");
     await setDoc(doc(db, "posts", currentPost.slug), { title: form.title.value.trim(), slug: currentPost.slug, excerpt: form.excerpt.value.trim(), content: form.content.value.trim(), status: form.status.value, landscapeUrl, portraitUrl, preparedBy: currentPost.preparedBy || "ChatGPT", authorEmail: auth.currentUser.email, publishedAt: currentPost.publishedAt || serverTimestamp(), updatedAt: serverTimestamp() });
     currentPost = { ...currentPost, landscapeUrl, portraitUrl, status: form.status.value };
     setStatus(publishStatus, "Changes saved successfully. The post is available in the Posts section.", "success");
     await loadPreparedPosts();
   } catch (error) {
-    const message = error.code === "permission-denied" || error.code === "storage/unauthorized" ? permissionMessage() : error.message;
+    const message = error.code === "permission-denied" ? permissionMessage() : error.message;
     setStatus(publishStatus, message, "error");
   }
 });
