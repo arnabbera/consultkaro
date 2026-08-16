@@ -4,46 +4,82 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
-  <title>ConsultKaro Admin</title>
+  <meta name="theme-color" content="#071c3f">
+  <title>Restricted Administration | ConsultKaro</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&family=Sora:wght@700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/admin/admin.css">
   <link rel="icon" href="/images/consultkaro-classic-logo.svg">
 </head>
 <body>
-  <header class="admin-header"><div class="admin-wrap"><a href="/">← ConsultKaro homepage</a><strong>Post Administration</strong></div></header>
-  <main class="admin-main"><div class="admin-wrap">
-    <section class="panel" id="loginPanel">
-      <h1>Admin Login</h1>
-      <p>Sign in using the authorised ConsultKaro Google account.</p>
-      <button class="btn" id="googleLogin" type="button">Continue with Google</button>
-      <p class="status" id="authStatus" role="status" aria-live="polite">Only beraarnab@gmail.com is authorised.</p>
-    </section>
+  <header class="admin-header">
+    <div class="admin-wrap header-inner">
+      <a class="header-brand" href="/" aria-label="Return to ConsultKaro homepage">
+        <img src="/images/consultkaro-admin-logo.webp" alt="ConsultKaro Property Consultant in Kolkata" width="58" height="58">
+        <span><strong>ConsultKaro</strong><small>Administration Portal</small></span>
+      </a>
+      <a class="home-link" href="/">Return to website <span aria-hidden="true">→</span></a>
+    </div>
+  </header>
 
-    <section class="panel hidden" id="editorPanel">
-      <div style="display:flex;justify-content:space-between;gap:18px;align-items:start;flex-wrap:wrap"><div><h1>Posts Prepared by ChatGPT</h1><p id="signedInAs"></p><p>Select a prepared post, review the text, add both images and publish.</p></div><button class="btn secondary" id="logout" type="button">Sign out</button></div>
-      <div id="preparedPosts" class="prepared-posts" aria-live="polite"></div>
-    </section>
-
-    <section class="panel hidden" id="postEditorPanel">
-      <div class="editor-heading"><div><p class="eyebrow">Editing prepared post</p><h1 id="editorTitle">Edit Post</h1></div><button class="btn secondary" id="backToPosts" type="button">← Back to posts</button></div>
-      <form id="postForm">
-        <div class="form-grid">
-          <div class="field full"><label for="title">Post title</label><input id="title" name="title" maxlength="120" required></div>
-          <div class="field"><label for="slug">URL slug</label><input id="slug" name="slug" pattern="[a-z0-9-]+" placeholder="common-property-frauds-india" readonly required></div>
-          <div class="field"><label for="status">Status</label><select id="status" name="status"><option value="published">Published</option><option value="draft">Draft</option></select></div>
-          <div class="field full"><label for="excerpt">Short summary</label><textarea id="excerpt" name="excerpt" maxlength="300" required></textarea></div>
-          <div class="field full"><label for="content">Post content</label><textarea id="content" name="content" required></textarea><span class="hint">Use a blank line between paragraphs. Plain text is stored safely.</span></div>
-          <div class="field"><label for="landscapeImage">16:9 landscape image</label><input id="landscapeImage" name="landscapeImage" type="file" accept="image/png,image/jpeg,image/webp"><span class="hint">Recommended: 1920 × 1080, maximum 5 MB.</span></div>
-          <div class="field"><label for="portraitImage">9:16 portrait image</label><input id="portraitImage" name="portraitImage" type="file" accept="image/png,image/jpeg,image/webp"><span class="hint">Recommended: 1080 × 1920, maximum 5 MB.</span></div>
-          <div class="field full"><div class="preview-grid"><div class="preview landscape"><strong>Landscape preview</strong><img id="landscapePreview" alt=""></div><div class="preview portrait"><strong>Portrait preview</strong><img id="portraitPreview" alt=""></div></div></div>
+  <main class="admin-main">
+    <div class="admin-wrap">
+      <section class="login-layout" id="loginPanel">
+        <div class="brand-panel">
+          <span class="security-label">Secure administration</span>
+          <img class="portal-logo" src="/images/consultkaro-admin-logo.webp" alt="ConsultKaro Property Consultant in Kolkata" width="640" height="640">
+          <h1>Manage ConsultKaro Posts</h1>
+          <p>Review posts prepared by ChatGPT, refine the content, add responsive images and publish approved updates.</p>
+          <ul class="feature-list">
+            <li>Review complete prepared articles</li>
+            <li>Upload 16:9 and 9:16 images</li>
+            <li>Publish securely to the Posts section</li>
+          </ul>
         </div>
-        <div class="actions"><button class="btn" type="submit">Save changes and publish</button><a class="btn secondary" href="/posts/">View posts</a></div>
-        <p class="status" id="publishStatus" role="status" aria-live="polite">Review the prepared content and add or replace both images.</p>
-      </form>
-    </section>
-  </div></main>
+        <div class="login-card">
+          <div class="lock-mark" aria-hidden="true">●</div>
+          <p class="eyebrow">Restricted area</p>
+          <h2>Administrator Login</h2>
+          <p class="login-copy">Restricted login. Only authorised administrators are allowed to sign in.</p>
+          <button class="google-button" id="googleLogin" type="button">
+            <span class="google-mark" aria-hidden="true">G</span>
+            Continue securely with Google
+          </button>
+          <p class="status discreet" id="authStatus" role="status" aria-live="polite">Unauthorised accounts will be denied access automatically.</p>
+          <div class="security-note"><span aria-hidden="true">✓</span><p>Authentication and access permissions are protected through Firebase.</p></div>
+        </div>
+      </section>
+
+      <section class="panel hidden" id="editorPanel">
+        <div class="dashboard-heading">
+          <div><p class="eyebrow">Restricted administration</p><h1>Posts Prepared by ChatGPT</h1><p>Select a prepared post, review the text, add both images and publish.</p></div>
+          <button class="btn secondary" id="logout" type="button">Sign out</button>
+        </div>
+        <div id="preparedPosts" class="prepared-posts" aria-live="polite"></div>
+      </section>
+
+      <section class="panel hidden" id="postEditorPanel">
+        <div class="editor-heading"><div><p class="eyebrow">Editing prepared post</p><h1 id="editorTitle">Edit Post</h1></div><button class="btn secondary" id="backToPosts" type="button">← Back to posts</button></div>
+        <form id="postForm">
+          <div class="form-grid">
+            <div class="field full"><label for="title">Post title</label><input id="title" name="title" maxlength="120" required></div>
+            <div class="field"><label for="slug">URL slug</label><input id="slug" name="slug" pattern="[a-z0-9-]+" readonly required></div>
+            <div class="field"><label for="status">Status</label><select id="status" name="status"><option value="published">Published</option><option value="draft">Draft</option></select></div>
+            <div class="field full"><label for="excerpt">Short summary</label><textarea id="excerpt" name="excerpt" maxlength="300" required></textarea></div>
+            <div class="field full"><label for="content">Post content</label><textarea id="content" name="content" required></textarea><span class="hint">Use a blank line between paragraphs.</span></div>
+            <div class="field upload-field"><label for="landscapeImage">16:9 landscape image</label><input id="landscapeImage" name="landscapeImage" type="file" accept="image/png,image/jpeg,image/webp"><span class="hint">Recommended: 1920 × 1080, maximum 5 MB.</span></div>
+            <div class="field upload-field"><label for="portraitImage">9:16 portrait image</label><input id="portraitImage" name="portraitImage" type="file" accept="image/png,image/jpeg,image/webp"><span class="hint">Recommended: 1080 × 1920, maximum 5 MB.</span></div>
+            <div class="field full"><div class="preview-grid"><div class="preview landscape"><strong>Landscape preview</strong><img id="landscapePreview" alt=""></div><div class="preview portrait"><strong>Portrait preview</strong><img id="portraitPreview" alt=""></div></div></div>
+          </div>
+          <div class="actions"><button class="btn" type="submit">Save changes and publish</button><a class="btn secondary" href="/posts/">View posts</a></div>
+          <p class="status" id="publishStatus" role="status" aria-live="polite">Review the prepared content and add or replace both images.</p>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <footer class="admin-footer"><div class="admin-wrap"><span>© 2026 ConsultKaro</span><span>Restricted administration portal</span></div></footer>
   <script type="module" src="/admin/admin.js"></script>
 </body>
 </html>
