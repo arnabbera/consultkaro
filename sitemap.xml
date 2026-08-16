@@ -157,9 +157,19 @@
   </url>
   <url>
     <loc>https://www.consultkaro.org/posts/</loc>
-    <lastmod>2026-08-15</lastmod>
+    <lastmod>2026-08-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.consultkaro.org/posts/before-you-buy-a-flat-in-kolkata/</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://www.consultkaro.org/images/posts/property-buying-warning.webp</image:loc>
+      <image:title>Before You Buy a Flat in Kolkata property verification warning</image:title>
+    </image:image>
   </url>
   <url>
     <loc>https://www.consultkaro.org/posts/welcome-to-consultkaro/</loc>
