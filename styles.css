@@ -1083,3 +1083,24 @@ footer nav a:focus-visible {
 .service-card-link:hover .service-learn-more i {
   transform: translateX(4px);
 }
+
+
+.service-card {
+  overflow: hidden;
+}
+
+.service-card-image {
+  display: block;
+  width: calc(100% + 48px);
+  height: auto;
+  aspect-ratio: 16 / 9;
+  margin: -24px -24px 22px;
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 760px) {
+  .service-card-image {
+    aspect-ratio: 9 / 16;
+  }
+}
