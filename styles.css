@@ -1035,3 +1035,51 @@ footer nav a:focus-visible {
     gap: 10px 16px;
   }
 }
+
+
+.service-card-link {
+  display: block;
+  min-width: 0;
+  color: inherit;
+  text-decoration: none;
+  border-radius: var(--radius);
+}
+
+.service-card-link .service-card {
+  height: 100%;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.service-card-link:hover .service-card,
+.service-card-link:focus-visible .service-card {
+  transform: translateY(-5px);
+  border-color: #cbb28e;
+  box-shadow: 0 18px 42px rgba(40, 31, 21, 0.13);
+}
+
+.service-card-link:focus-visible {
+  outline: 3px solid rgba(176, 138, 87, 0.42);
+  outline-offset: 4px;
+}
+
+.service-learn-more {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+.service-learn-more i {
+  width: auto;
+  height: auto;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  transition: transform 180ms ease;
+}
+
+.service-card-link:hover .service-learn-more i {
+  transform: translateX(4px);
+}
