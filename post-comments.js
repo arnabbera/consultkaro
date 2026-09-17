@@ -10,15 +10,20 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 import { firebaseConfig } from "/firebase-config.js";
 
-const anchor = document.querySelector("[data-post-share]");
+const anchor = document.querySelector("[data-post-comments-anchor]") || document.querySelector("[data-post-share]");
 
 if (anchor) {
   const app = getApps()[0] || initializeApp(firebaseConfig);
   const db = getFirestore(app);
+  const isCompanyDiscussion = anchor.hasAttribute("data-post-comments-anchor");
   const dynamicId = new URLSearchParams(location.search).get("id");
   const pathParts = location.pathname.split("/").filter(Boolean);
-  const postId = (dynamicId || pathParts.at(-1) || "post").replace(/[^a-z0-9-]/gi, "-").toLowerCase();
-  const postTitle = document.querySelector("h1")?.textContent?.trim() || document.title;
+  const postId = (isCompanyDiscussion ? "consultkaro-company" : dynamicId || pathParts.at(-1) || "post").replace(/[^a-z0-9-]/gi, "-").toLowerCase();
+  const postTitle = isCompanyDiscussion ? "ConsultKaro" : document.querySelector("h1")?.textContent?.trim() || document.title;
+  const sectionTitle = isCompanyDiscussion ? "Comments about ConsultKaro" : "Comments";
+  const formIntro = isCompanyDiscussion
+    ? "Share your experience or feedback about ConsultKaro. Your comment will appear after administrator approval."
+    : "Your comment will appear after approval by the ConsultKaro administrator.";
   const commentsRef = collection(db, "postComments", postId, "comments");
 
   const section = document.createElement("section");
@@ -28,14 +33,14 @@ if (anchor) {
     <div class="comments-heading-row">
       <div>
         <p class="comments-eyebrow">Reader discussion</p>
-        <h2 id="comments-heading">Comments</h2>
+        <h2 id="comments-heading">${sectionTitle}</h2>
       </div>
       <span class="comment-count" id="commentCount">0 comments</span>
     </div>
     <div class="comments-list" id="commentsList" aria-live="polite"><p class="comments-empty">Loading comments…</p></div>
     <form class="comment-form" id="commentForm">
       <h3>Leave a comment</h3>
-      <p>Your comment will appear after approval by the ConsultKaro administrator.</p>
+      <p>${formIntro}</p>
       <div class="comment-field">
         <label for="commentName">Your name</label>
         <input id="commentName" name="name" type="text" minlength="2" maxlength="60" autocomplete="name" required>
@@ -51,7 +56,8 @@ if (anchor) {
       <button class="comment-submit" type="submit">Submit comment</button>
       <p class="comment-status" id="commentStatus" role="status" aria-live="polite"></p>
     </form>`;
-  anchor.insertAdjacentElement("afterend", section);
+  if (isCompanyDiscussion) anchor.replaceWith(section);
+  else anchor.insertAdjacentElement("afterend", section);
 
   const form = section.querySelector("#commentForm");
   const status = section.querySelector("#commentStatus");
