@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { collectionGroup, doc, getDoc, getDocs, getFirestore, query, serverTimestamp, setDoc, updateDoc, where } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 import { ADMIN_EMAIL, firebaseConfig } from "/firebase-config.js";
 
 const loginPanel = document.querySelector("#loginPanel");
@@ -9,6 +9,7 @@ const postEditor = document.querySelector("#postEditorPanel");
 const preparedPosts = document.querySelector("#preparedPosts");
 const authStatus = document.querySelector("#authStatus");
 const publishStatus = document.querySelector("#publishStatus");
+const pendingComments = document.querySelector("#pendingComments");
 const form = document.querySelector("#postForm");
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -18,6 +19,50 @@ provider.setCustomParameters({ prompt: "select_account" });
 let drafts = [];
 let currentPost = null;
 let databasePermissionBlocked = false;
+
+async function loadPendingComments() {
+  pendingComments.innerHTML = "<p>Loading pending comments…</p>";
+  try {
+    const snapshot = await getDocs(query(collectionGroup(db, "comments"), where("status", "==", "pending")));
+    const comments = snapshot.docs
+      .map((item) => ({ ref: item.ref, ...item.data() }))
+      .sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+    pendingComments.replaceChildren();
+    if (!comments.length) {
+      pendingComments.innerHTML = "<p>No pending comments.</p>";
+      return;
+    }
+    comments.forEach((comment) => {
+      const card = document.createElement("article");
+      card.className = "pending-comment";
+      card.innerHTML = `<header><div><h3></h3><small></small></div><span class="prepared-badge">Pending</span></header><p></p><div class="moderation-actions"><button class="btn approve" type="button">Approve</button><button class="btn reject" type="button">Reject</button></div>`;
+      card.querySelector("h3").textContent = comment.name;
+      card.querySelector("small").textContent = comment.postTitle || comment.postId;
+      card.querySelector("p").textContent = comment.message;
+      card.querySelector(".approve").addEventListener("click", () => moderateComment(comment.ref, "approved", card));
+      card.querySelector(".reject").addEventListener("click", () => moderateComment(comment.ref, "rejected", card));
+      pendingComments.append(card);
+    });
+  } catch (error) {
+    pendingComments.innerHTML = `<p class="status error">Unable to load comments: ${error.message}</p>`;
+  }
+}
+
+async function moderateComment(reference, nextStatus, card) {
+  const buttons = card.querySelectorAll("button");
+  buttons.forEach((button) => { button.disabled = true; });
+  try {
+    await updateDoc(reference, { status: nextStatus, moderatedAt: serverTimestamp(), moderatedBy: auth.currentUser.email });
+    card.remove();
+    if (!pendingComments.querySelector(".pending-comment")) pendingComments.innerHTML = "<p>No pending comments.</p>";
+  } catch (error) {
+    buttons.forEach((button) => { button.disabled = false; });
+    const message = document.createElement("p");
+    message.className = "status error";
+    message.textContent = `Unable to update comment: ${error.message}`;
+    card.append(message);
+  }
+}
 
 function setStatus(node, message, kind = "") { node.textContent = message; node.className = `status ${kind}`.trim(); }
 function showDashboard() { dashboard.classList.remove("hidden"); postEditor.classList.add("hidden"); }
@@ -113,12 +158,13 @@ async function editPreparedPost(draft) {
 document.querySelector("#googleLogin").addEventListener("click", async () => { try { const result = await signInWithPopup(auth, provider); if (result.user.email?.toLowerCase() !== ADMIN_EMAIL) { await signOut(auth); throw new Error("This Google account is not authorised."); } } catch (error) { setStatus(authStatus, error.message, "error"); } });
 document.querySelector("#logout").addEventListener("click", () => signOut(auth));
 document.querySelector("#backToPosts").addEventListener("click", showDashboard);
+document.querySelector("#refreshComments").addEventListener("click", loadPendingComments);
 
 onAuthStateChanged(auth, async (user) => {
   const allowed = user?.email?.toLowerCase() === ADMIN_EMAIL && user.emailVerified;
   if (user && !allowed) await signOut(auth);
   loginPanel.classList.toggle("hidden", allowed); dashboard.classList.toggle("hidden", !allowed); postEditor.classList.add("hidden");
-  if (allowed) { try { await loadPreparedPosts(); } catch (error) { preparedPosts.textContent = `Unable to load prepared posts: ${error.message}`; } }
+  if (allowed) { try { await Promise.all([loadPreparedPosts(), loadPendingComments()]); } catch (error) { preparedPosts.textContent = `Unable to load prepared posts: ${error.message}`; } }
 });
 
 form.addEventListener("submit", async (event) => {

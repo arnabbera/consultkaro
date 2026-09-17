@@ -57,6 +57,14 @@
           <button class="btn secondary" id="logout" type="button">Sign out</button>
         </div>
         <div id="preparedPosts" class="prepared-posts" aria-live="polite"></div>
+        <section class="comment-moderation" aria-labelledby="commentModerationTitle">
+          <div class="moderation-heading">
+            <div><p class="eyebrow">Reader discussion</p><h2 id="commentModerationTitle">Pending Comments</h2></div>
+            <button class="btn secondary" id="refreshComments" type="button">Refresh comments</button>
+          </div>
+          <p class="moderation-copy">Approve suitable comments before they become visible on the website, or reject unwanted submissions.</p>
+          <div id="pendingComments" class="pending-comments" aria-live="polite"><p>No pending comments.</p></div>
+        </section>
       </section>
 
       <section class="panel hidden" id="postEditorPanel">
