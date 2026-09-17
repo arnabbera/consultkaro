@@ -22,8 +22,8 @@ if (anchor) {
   const postTitle = isCompanyDiscussion ? "ConsultKaro" : document.querySelector("h1")?.textContent?.trim() || document.title;
   const sectionTitle = isCompanyDiscussion ? "Comments about ConsultKaro" : "Comments";
   const formIntro = isCompanyDiscussion
-    ? "Share your experience or feedback about ConsultKaro. Your comment will appear after administrator approval."
-    : "Your comment will appear after approval by the ConsultKaro administrator.";
+    ? "Share your experience or feedback about ConsultKaro. Your comment will be published immediately."
+    : "Your comment will be published immediately.";
   const commentsRef = collection(db, "postComments", postId, "comments");
 
   const section = document.createElement("section");
@@ -78,7 +78,7 @@ if (anchor) {
     if (!comments.length) {
       const empty = document.createElement("p");
       empty.className = "comments-empty";
-      empty.textContent = "No approved comments yet. You can start the discussion.";
+      empty.textContent = "No comments yet. You can start the discussion.";
       list.append(empty);
       return;
     }
@@ -131,12 +131,12 @@ if (anchor) {
         message,
         postId,
         postTitle: postTitle.slice(0, 160),
-        status: "pending",
+        status: "approved",
         createdAt: serverTimestamp(),
       });
       localStorage.setItem("consultkaro-comment-submitted", String(Date.now()));
       form.reset();
-      setStatus("Thank you. Your comment was submitted for administrator approval.", "success");
+      setStatus("Thank you. Your comment is now visible publicly.", "success");
     } catch (error) {
       setStatus(error.code === "permission-denied" ? "Comment submission is not active yet. Please try again later." : "Unable to submit your comment. Please try again.", "error");
     } finally {
