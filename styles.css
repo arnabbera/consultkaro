@@ -1099,8 +1099,4 @@ footer nav a:focus-visible {
   object-position: center;
 }
 
-@media (max-width: 760px) {
-  .service-card-image {
-    aspect-ratio: 9 / 16;
-  }
-}
+
