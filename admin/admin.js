@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js";
-import { collectionGroup, doc, getDoc, getDocs, getFirestore, query, serverTimestamp, setDoc, updateDoc, where } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
+import { collectionGroup, deleteDoc, doc, getDoc, getDocs, getFirestore, serverTimestamp, setDoc } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 import { ADMIN_EMAIL, firebaseConfig } from "/firebase-config.js";
 
 const loginPanel = document.querySelector("#loginPanel");
@@ -21,26 +21,26 @@ let currentPost = null;
 let databasePermissionBlocked = false;
 
 async function loadPendingComments() {
-  pendingComments.innerHTML = "<p>Loading pending comments…</p>";
+  pendingComments.innerHTML = "<p>Loading comments…</p>";
   try {
-    const snapshot = await getDocs(query(collectionGroup(db, "comments"), where("status", "==", "pending")));
+    const snapshot = await getDocs(collectionGroup(db, "comments"));
     const comments = snapshot.docs
       .map((item) => ({ ref: item.ref, ...item.data() }))
       .sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
     pendingComments.replaceChildren();
     if (!comments.length) {
-      pendingComments.innerHTML = "<p>No pending comments.</p>";
+      pendingComments.innerHTML = "<p>No comments have been submitted.</p>";
       return;
     }
     comments.forEach((comment) => {
       const card = document.createElement("article");
       card.className = "pending-comment";
-      card.innerHTML = `<header><div><h3></h3><small></small></div><span class="prepared-badge">Pending</span></header><p></p><div class="moderation-actions"><button class="btn approve" type="button">Approve</button><button class="btn reject" type="button">Reject</button></div>`;
+      card.innerHTML = `<header><div><h3></h3><small></small></div><span class="prepared-badge"></span></header><p></p><div class="moderation-actions"><button class="btn reject" type="button">Delete comment</button></div>`;
       card.querySelector("h3").textContent = comment.name;
       card.querySelector("small").textContent = comment.postTitle || comment.postId;
+      card.querySelector(".prepared-badge").textContent = comment.status || "published";
       card.querySelector("p").textContent = comment.message;
-      card.querySelector(".approve").addEventListener("click", () => moderateComment(comment.ref, "approved", card));
-      card.querySelector(".reject").addEventListener("click", () => moderateComment(comment.ref, "rejected", card));
+      card.querySelector(".reject").addEventListener("click", () => deleteComment(comment.ref, card));
       pendingComments.append(card);
     });
   } catch (error) {
@@ -48,13 +48,14 @@ async function loadPendingComments() {
   }
 }
 
-async function moderateComment(reference, nextStatus, card) {
+async function deleteComment(reference, card) {
+  if (!window.confirm("Delete this comment permanently?")) return;
   const buttons = card.querySelectorAll("button");
   buttons.forEach((button) => { button.disabled = true; });
   try {
-    await updateDoc(reference, { status: nextStatus, moderatedAt: serverTimestamp(), moderatedBy: auth.currentUser.email });
+    await deleteDoc(reference);
     card.remove();
-    if (!pendingComments.querySelector(".pending-comment")) pendingComments.innerHTML = "<p>No pending comments.</p>";
+    if (!pendingComments.querySelector(".pending-comment")) pendingComments.innerHTML = "<p>No comments have been submitted.</p>";
   } catch (error) {
     buttons.forEach((button) => { button.disabled = false; });
     const message = document.createElement("p");
